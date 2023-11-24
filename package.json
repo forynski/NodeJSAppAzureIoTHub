@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "azure-iot-device": "^1.18.3",
     "azure-iot-device-http": "^1.14.3",
+    "dotenv": "^16.3.1",
     "node-fetch": "^3.3.2"
   }
 }

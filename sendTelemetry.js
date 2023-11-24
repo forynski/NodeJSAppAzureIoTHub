@@ -1,33 +1,53 @@
-const { Client: IoTHubClient } = require('azure-iot-device-http');
-const fetch = require('node-fetch');
+require('dotenv').config();
+const { clientFromConnectionString } = require('azure-iot-device-http');
+const { Message } = require('azure-iot-device');
 
-const connectionString = 'YOUR_AZURE_IOT_HUB_CONNECTION_STRING';
+const connectionString = process.env.IOT_HUB_CONNECTION_STRING;
+// const connectionString = 'HostName=IoTHubUoD.azure-devices.net;DeviceId=iPhone;SharedAccessKey=ud4o53zYfWIcEg4d8q0PaCcynGVr53YoUAIoTGdqH0o=';
 
-const client = IoTHubClient.fromConnectionString(connectionString);
+// console.log(process.env);
 
-// Function to send telemetry data to Azure IoT Hub
-async function sendTelemetry(data) {
-    try {
-        const message = {
-            messageId: Date.now().toString(),
-            content: JSON.stringify(data),
-        };
-
-        await client.sendEvent(message);
-
-        console.log('Telemetry data sent successfully:', data);
-    } catch (error) {
-        console.error('Error sending telemetry data:', error.message);
-    }
+if (!connectionString) {
+    console.error('Error: IoT Hub connection string is not set.');
+    process.exit(1);
 }
 
-// Example: Sending accelerometer data
-const accelerometerData = {
-    accelerometerX: 0.5,
-    accelerometerY: 0.2,
-    accelerometerZ: -0.1,
-    vibration: 0.8,
+const client = clientFromConnectionString(connectionString);
+
+const connectCallback = (err) => {
+    if (err) {
+        console.error('Error connecting to IoT Hub:', err);
+        process.exit(1);
+    }
+
+    console.log('Client connected');
+
+    // Sample telemetry data
+    const telemetryData = {
+        temperature: 25.5,
+        humidity: 60.0,
+        pressure: 1013.25,
+        timestamp: new Date().toISOString(),
+    };
+
+    const message = new Message(JSON.stringify(telemetryData));
+
+    // Send the telemetry message
+    client.sendEvent(message, (sendErr) => {
+        if (sendErr) {
+            console.error('Error sending telemetry:', sendErr.toString());
+        } else {
+            console.log('Telemetry sent successfully');
+        }
+    });
+
+    // Listen for messages from IoT Hub
+    client.on('message', (msg) => {
+        console.log('Received message:', msg.getData());
+        client.complete(msg, () => {
+            console.log('Completed');
+        });
+    });
 };
 
-// Send telemetry data
-sendTelemetry(accelerometerData);
+client.open(connectCallback);
