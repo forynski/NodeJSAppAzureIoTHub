@@ -1,0 +1,1 @@
+# Node.js app utilizing Azure IoT SDK to send telemetry from physical device to Azure IoT Hub

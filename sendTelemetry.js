@@ -3,7 +3,6 @@ const { clientFromConnectionString } = require('azure-iot-device-http');
 const { Message } = require('azure-iot-device');
 
 const connectionString = process.env.IOT_HUB_CONNECTION_STRING;
-// const connectionString = 'HostName=IoTHubUoD.azure-devices.net;DeviceId=iPhone;SharedAccessKey=ud4o53zYfWIcEg4d8q0PaCcynGVr53YoUAIoTGdqH0o=';
 
 // console.log(process.env);
 
