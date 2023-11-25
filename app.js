@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Client, Message } = require('azure-iot-device');
@@ -7,7 +8,7 @@ const port = 3000;
 
 // Azure IoT Hub connection string
 const connectionString = process.env.IOT_HUB_CONNECTION_STRING;
-const client = Client.fromConnectionString(connectionString, 'mqtt');
+const client = Client.fromConnectionString(connectionString, require('azure-iot-device-mqtt').Mqtt);
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
