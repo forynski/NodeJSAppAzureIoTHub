@@ -8,7 +8,7 @@ const app = express();
 
 // Azure IoT Hub connection string
 // const connectionString = process.env.IOT_HUB_CONNECTION_STRING;
-const connectionString = IOT_HUB_CONNECTION_STRING;
+const connectionString = 'HostName=IoTHubUoD.azure-devices.net;DeviceId=iPhone;SharedAccessKey=ud4o53zYfWIcEg4d8q0PaCcynGVr53YoUAIoTGdqH0o='
 const client = Client.fromConnectionString(connectionString, require('azure-iot-device-mqtt').Mqtt);
 
 // Middleware to parse JSON requests
