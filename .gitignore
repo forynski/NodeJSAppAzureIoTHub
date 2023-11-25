@@ -1,10 +1,7 @@
-# Ignore node_modules directory
+# .gitignore
+
+# Dependency directories
 node_modules/
 
-# Ignore log files
-*.log
-logs/
-log/
-
-# Ignore environment files
-*.env
+# Environment variables
+.env
