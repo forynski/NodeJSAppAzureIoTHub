@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Client, Message } = require('azure-iot-device');
+const port = 3000;
 
 const app = express();
 // const port = 3000;
@@ -33,6 +34,6 @@ app.post('/sendData', (req, res) => {
 });
 
 // Start the server
-app.listen('0.0.0.0', () => {
-    console.log(`Server listening...`);
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
