@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { Client, Message } = require('azure-iot-device');
 
 const app = express();
-const port = 8080;
+const port = 3000;
 
 // Azure IoT Hub connection string
 const connectionString = process.env.IOT_HUB_CONNECTION_STRING;
