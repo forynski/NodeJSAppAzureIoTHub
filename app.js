@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const { Client, Message } = require('azure-iot-device');
 
 const app = express();
-// const port = 3000;
 const port = process.env.PORT || 8080;
 
 // Azure IoT Hub connection string
@@ -31,6 +30,11 @@ app.post('/sendData', (req, res) => {
             res.status(200).send('OK');
         }
     });
+});
+
+// Simple route to handle the root path
+app.get('/', (req, res) => {
+    res.send('Hello, this is your Azure IoT Hub server.');
 });
 
 // Start the server
